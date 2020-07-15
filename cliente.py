@@ -1,35 +1,34 @@
-# Variables a utilizar
-localhost = 'localhost'
-puerto = 8050
-
-#Importamos el módulo socket
+#importamos la libreria
 import socket
 
-#Creamos el objeto socket
-socket = socket.socket()
+#Creamos el socket, o la instancia del socket
+SocketServidor = socket.socket()
 
-#Conexión con el servidor
-socket.connect((localhost, puerto))
+#Nos conectamos al localhost o nos conectamos a la misma direccion del servidor
+SocketServidor.connect(("localhost", 9999))
 
-#Imprimimos el menu para interactuar con cliente
 print("--- MENU ---")
 print("Precione a para saludar")
 print("Precione b para despedir")
 print("Precione c para salir")
 print("--- FIN ---\n")
-     
-#Creamos un bucle para retener la conexión
+
+#Creamos el ciclo para enviar peticiones al servidor
 while True:
-    #Entrada de datos para interactuar con cliente
-    mens = raw_input("Su respuesta >> ")
+    #Solicitamos algo para enviar
+    mensaje = input("> ")
 
-    #Método send envia mensaje
-    socket.send(mens.encode('ascii'))
+    #Enviamos el prompt
+    SocketServidor.send(bytes(mensaje,"utf-8"))
 
-    #Método recv recibe mensaje del servidor
-    recibido = socket.recv(1024)
-    print(recibido)
+    #Si enviamos el mensaje para salir
+    if(mensaje == "salir"):
+        break
 
-#Cerramos la instancia del servidor.
-socket.close()
-print("Conexión cerrada")
+#Si el mensaje de salida es llamado
+print("El cliente ha finalizado")
+
+#Se cierra la conexion
+SocketServidor.close()
+
+

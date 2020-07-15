@@ -1,46 +1,36 @@
-#Importamos el módulo socket
+#Importar la libreria
 import socket
 
-#Iniciamos un objeto servidor asociado a socket
-servidor = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+#Crear o instancear un objeto socket
+SocketServidor = socket.socket()
+print("Socket listo")
+print(SocketServidor)
+#input()
 
-#Método BIND: Conecta una dirección local a un socket
-servidor.bind(("", 8050))
+#Conectamos el servidor a un puerto
+#Lo bindeamos a un puerto
+SocketServidor.bind(("localhost", 9999))
+print("Conectado a localhost en el puerto 9999")
 
-#Método LISTEN: Anuncia la disposición a aceptar conexiones; indica tamaño de cola.
-servidor.listen(1)
+#Escuchamos conexiones entrantes al servidor
+SocketServidor.listen(1)
+print("Escuchando en puerto 9999")
 
-#
-cliente, direccion = servidor.accept()
+#Aceptando peticiones entrantes
+SocketCliente, addr = SocketServidor.accept()
+print(SocketCliente)
+print(addr)
+print("Acepta peticion entrante")
 
+#se ejecuta un ciclo para recibir peticiones del cliente
 while True:
-    #Recibimos la respuesta del cliente.
-    recibido = cliente.recv(1024)
+    recibido = SocketCliente.recv(1024)
+    if recibido.decode("utf-8") == "salir":
+        break
+    print ("recibido:", recibido.decode("utf-8"))
 
-    #Verificamos la conexión del cliente. 
-    print "Recibo conexion de la IP: " + str(direccion[0]) + "Puerto: " + str(direccion[1])
-    
-    #Dependiendo de la respuesta del cliente, se desplegaran los siguientes mensajes.
-    if(recibido == 'a'):
-        #Mensaje que el servidor le mandara al cliente.
-        mensaje_saludo = ("Hola Cliente")
-        #Método SEND: Envía datos a través de la conexión.
-        cliente.send(mensaje_saludo)
-    elif(recibido == 'b'):
-        mensaje_despedida = ("Adiós Cliente")
-        cliente.send(mensaje_despedida)
-    else:
-        mensaje_conexion = ("Cerrando conexión")
-        cliente.send(mensaje_conexion)
-        #Cerramos las conexión con el cliente.
-        cliente.close()
-        
-    #print(recibido)
-    #cli.send("mensaje recibido")
-    #msg_toSend = ("Mensaje recibido desde el cliente, como estás Jerry")
-    #cliente.send(msg_toSend)
+#Terminar conexion
+print("Conexion Finalizada")
 
-#cliente.close()
-servidor.close()
-
-print("Conexiones cerradas")
+SocketCliente.close()
+SocketServidor.close()
