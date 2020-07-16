@@ -18,8 +18,12 @@ while True:
     #Solicitamos algo para enviar
     mensaje = input("> ")
 
-    #Enviamos el prompt
+    #Enviamos el dato al servidor
     SocketServidor.send(bytes(mensaje,"utf-8"))
+
+    #Recibimos respuesta del servidor (R: la cantidad ya procesada) 
+    recibido = SocketServidor.recv(1024)
+    print(recibido.decode("utf-8"))
 
     #Si enviamos el mensaje para salir
     if(mensaje == "salir"):

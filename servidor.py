@@ -1,6 +1,9 @@
 #Importar la libreria
 import socket
 
+#importamos las funciones de conversion
+import cambioMoneda
+
 #Crear o instancear un objeto socket
 SocketServidor = socket.socket()
 print("Socket listo")
@@ -24,10 +27,22 @@ print("Acepta peticion entrante")
 
 #se ejecuta un ciclo para recibir peticiones del cliente
 while True:
-    recibido = SocketCliente.recv(1024)
-    if recibido.decode("utf-8") == "salir":
+    dataEntrante = SocketCliente.recv(1024)
+    mensaje = dataEntrante.decode("utf-8")
+
+    #---------Funcion para salir------------
+    if mensaje  == "salir":
         break
-    print ("recibido:", recibido.decode("utf-8"))
+    #---------------------------------------
+
+    #---------TO DO las funciones para convertir divisas----------
+    #---------Agregarle switch------------------------------------
+    if(mensaje == "a"):
+        retorno = cambioMoneda.euro_clp("hola mundo")
+        SocketCliente.sendall(retorno.encode("utf-8"))
+     #------------------------------------------------------------
+
+    #print ("recibido:", mensaje)
 
 #Terminar conexion
 print("Conexion Finalizada")
