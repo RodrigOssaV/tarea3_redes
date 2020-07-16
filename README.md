@@ -7,4 +7,5 @@ Aplicación basado en servicio Cliente/Servidor de cambio de dividas (Chilenas a
 Integrantes de la aplicación
 
 Diego Sanhueza
+
 Rodrigo Ossa
