@@ -10,8 +10,7 @@ print("Socket listo")
 print(SocketServidor)
 #input()
 
-#Conectamos el servidor a un puerto
-#Lo bindeamos a un puerto
+#Conectamos el servidor a un puerto o lo bindeamos a un puerto
 SocketServidor.bind(("localhost", 9999))
 print("Conectado a localhost en el puerto 9999")
 
@@ -21,12 +20,14 @@ print("Escuchando en puerto 9999")
 
 #Aceptando peticiones entrantes
 SocketCliente, addr = SocketServidor.accept()
-print(SocketCliente)
+print("Informacion Socket cliente: ", SocketCliente)
 print(addr)
 print("Acepta peticion entrante")
 
 #se ejecuta un ciclo para recibir peticiones del cliente
 while True:
+
+    #Recibimos la opcion del cliente
     dataEntrante = SocketCliente.recv(1024)
     mensaje = dataEntrante.decode("utf-8")
 
@@ -37,7 +38,14 @@ while True:
 
     #---------TO DO las funciones para convertir divisas----------
     #---------Agregarle switch------------------------------------
-    if(mensaje == "a"):
+    if(mensaje == 'a'):
+        cantidadAConvertir = SocketCliente.recv(1024)
+        retorno = cambioMoneda.euro_clp(cantidadAConvertir)
+        SocketCliente.send(retorno) #.encode("utf-8"))
+    elif(mensaje == "b"):
+        retorno = cambioMoneda.euro_clp("hola mundo")
+        SocketCliente.sendall(retorno.encode("utf-8"))
+    elif(mensaje == "c"):
         retorno = cambioMoneda.euro_clp("hola mundo")
         SocketCliente.sendall(retorno.encode("utf-8"))
      #------------------------------------------------------------
