@@ -1,54 +1,37 @@
-#importamos la libreria
 import socket
-import menu
-import validador
 
-#Creamos el socket, o la instancia del socket
 SocketServidor = socket.socket()
 
 #Nos conectamos al localhost o nos conectamos a la misma direccion del servidor
-SocketServidor.connect(("localhost", 9999))
+SocketServidor.connect(("localhost", 8888))
 
-
-#Creamos el ciclo para enviar peticiones al servidor
 while True:
-    #Despliega el menu de opciones por pantalla
-    menu.principal()
+    print("MENU")
+    print("a) Euro a Clp")
+    print("b) Dolar a Clp")
+    print("c) Yen a Clp")
+    print("\n")
 
-    #Instancia del mensaje fuera del loop (por razones logicas y flujo del programa)
-    mensaje = ''
+    data = input("(Opción)>> ")
 
-    #Entro a un loop para validar las opciones
-    while True:
-        mensaje = input("> ")
+    #TODO Validar entradas
 
-        if(mensaje == "salir"):
-            break
-
-        if(validador.validarDatos(mensaje) == True):
-            break
-        else:
-            print(">> Opción Errónea, seleccione de nuevo")
-
-    #Si la opcion es salir, el programa termina
-    if(mensaje == "salir"):
-        SocketServidor.send(bytes(mensaje,"utf-8"))
+    if(data == "salir"):
+        SocketServidor.send(bytes(data, "utf-8"))
         break
+    SocketServidor.send(bytes(data, "utf-8"))
 
-    #Despliega instrucciones por pantalla
-    menu.cantidad()
+    cantidadEnviar = input("(Cantidad)>> ")
+    SocketServidor.send(bytes(cantidadEnviar, "utf-8"))
 
-    cantidad = int(input("> Cantidad: "))
+    cantidadRecibida = SocketServidor.recv(1024)
+    cantidadConvertida = cantidadRecibida.decode("utf-8")
 
-    #Enviamos el dato al servidor
-    SocketServidor.send(bytes(cantidad,"utf-8"))
-
-    #Recibimos respuesta del servidor (R: la cantidad ya procesada) 
-    recibido = SocketServidor.recv(1024)
-    print(recibido.decode("utf-8"))
+    print("\n")
+    print("La Cantidad Convertida es: ",cantidadConvertida) 
+    print("\n")
 
 
-#Si el mensaje de salida es llamado
 print("El cliente ha finalizado")
 
 #Se cierra la conexion

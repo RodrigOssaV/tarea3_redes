@@ -1,8 +1,4 @@
-#Importar la libreria
 import socket
-
-#importamos las funciones de conversion
-import cambioMoneda
 
 #Crear o instancear un objeto socket
 SocketServidor = socket.socket()
@@ -11,12 +7,12 @@ print(SocketServidor)
 #input()
 
 #Conectamos el servidor a un puerto o lo bindeamos a un puerto
-SocketServidor.bind(("localhost", 9999))
-print("Conectado a localhost en el puerto 9999")
+SocketServidor.bind(("localhost", 8888))
+print("Conectado a localhost en el puerto 8888")
 
 #Escuchamos conexiones entrantes al servidor
 SocketServidor.listen(1)
-print("Escuchando en puerto 9999")
+print("Escuchando en puerto 8888")
 
 #Aceptando peticiones entrantes
 SocketCliente, addr = SocketServidor.accept()
@@ -24,35 +20,34 @@ print("Informacion Socket cliente: ", SocketCliente)
 print(addr)
 print("Acepta peticion entrante")
 
-#se ejecuta un ciclo para recibir peticiones del cliente
 while True:
+    recibidoCliente = SocketCliente.recv(1024)
+    mensaje = recibidoCliente.decode("utf-8")
 
-    #Recibimos la opcion del cliente
-    dataEntrante = SocketCliente.recv(1024)
-    mensaje = dataEntrante.decode("utf-8")
-
-    #---------Funcion para salir------------
-    if mensaje  == "salir":
+    if(mensaje == "salir"):
         break
-    #---------------------------------------
+    elif(mensaje == 'a'):
+        cantidadRecibida = SocketCliente.recv(1024)
+        cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
 
-    #---------TO DO las funciones para convertir divisas----------
-    #---------Agregarle switch------------------------------------
-    if(mensaje == 'a'):
-        cantidadAConvertir = SocketCliente.recv(1024)
-        retorno = cambioMoneda.euro_clp(cantidadAConvertir)
-        SocketCliente.send(retorno) #.encode("utf-8"))
-    elif(mensaje == "b"):
-        retorno = cambioMoneda.euro_clp("hola mundo")
-        SocketCliente.sendall(retorno.encode("utf-8"))
-    elif(mensaje == "c"):
-        retorno = cambioMoneda.euro_clp("hola mundo")
-        SocketCliente.sendall(retorno.encode("utf-8"))
-     #------------------------------------------------------------
+        calculoEuro = cantidadMonetaria * 890
 
-    #print ("recibido:", mensaje)
+        resultadoA = str(calculoEuro)
 
-#Terminar conexion
+        SocketCliente.send(bytes(resultadoA, "utf-8"))
+        print("Cantidad Enviada")
+    elif(mensaje == 'b'):
+        cantidadRecibida = SocketCliente.recv(1024)
+        cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
+
+        calculoEuro = cantidadMonetaria * 771
+
+        resultadoA = str(calculoEuro)
+
+        SocketCliente.send(bytes(resultadoA, "utf-8"))
+        print("Cantidad Enviada")
+
+
 print("Conexion Finalizada")
 
 SocketCliente.close()
