@@ -1,5 +1,7 @@
 import socket
 
+import time
+
 SocketServidor = socket.socket()
 
 #Nos conectamos al localhost o nos conectamos a la misma direccion del servidor
@@ -7,10 +9,14 @@ SocketServidor.connect(("localhost", 8888))
 
 while True:
     print("MENU")
-    print("a) Euro a Clp")
-    print("b) Dolar a Clp")
-    print("c) Yen a Clp")
+    print("a) EUR to CLP")
+    print("b) USD to CLP")
+    print("c) JPY to CLP")
+    print("d) ARS to CLP")
+    print("e) GBP to CLP")
+    print("f) BRL to CLP")
     print("\n")
+    data = input("(Opción)>> ")
 
     data = input("(Opción)>> ")
 
@@ -27,9 +33,9 @@ while True:
     cantidadRecibida = SocketServidor.recv(1024)
     cantidadConvertida = cantidadRecibida.decode("utf-8")
 
-    print("\n")
     print("La Cantidad Convertida es: ",cantidadConvertida) 
     print("\n")
+    time.sleep(3)
 
 
 print("El cliente ha finalizado")

@@ -36,6 +36,7 @@ while True:
 
         SocketCliente.send(bytes(resultadoA, "utf-8"))
         print("Cantidad Enviada")
+        
     elif(mensaje == 'b'):
         cantidadRecibida = SocketCliente.recv(1024)
         cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
@@ -47,6 +48,37 @@ while True:
         SocketCliente.send(bytes(resultadoA, "utf-8"))
         print("Cantidad Enviada")
 
+    elif(mensaje == 'c'):
+        cantidadRecibida = SocketCliente.recv(1024)
+        cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
+        calculoYen = cantidadMonetaria * 7.22
+        resultadoC = str(calculoYen)
+        SocketCliente.send(bytes(resultadoC, "utf-8"))
+        print("Cantidad enviada")
+    
+    elif(mensaje == 'd'):
+        cantidadRecibida = SocketCliente.recv(1024)
+        cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
+        calculoArgentino = cantidadMonetaria * 10.76
+        resultadoD = str(calculoArgentino)
+        SocketCliente.send(bytes(resultadoD, "utf-8"))
+        print("cantidad enviada")
+
+    elif(mensaje == 'e'):
+        cantidadRecibida = SocketCliente.recv(1024)
+        cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
+        calculoLibra = cantidadMonetaria * 981.31
+        resultadoD = str(calculoLibra)
+        SocketCliente.send(bytes(resultadoD, "utf-8"))
+        print("cantidad enviada")
+
+    elif(mensaje == 'f'):
+        cantidadRecibida = SocketCliente.recv(1024)
+        cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
+        calculoReal = cantidadMonetaria * 149.24
+        resultadoD = str(calculoReal)
+        SocketCliente.send(bytes(resultadoD, "utf-8"))
+        print("cantidad enviada")
 
 print("Conexion Finalizada")
 
