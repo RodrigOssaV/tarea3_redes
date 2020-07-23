@@ -29,23 +29,17 @@ while True:
     elif(mensaje == 'a'):
         cantidadRecibida = SocketCliente.recv(1024)
         cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
-
-        calculoEuro = cantidadMonetaria * 890
-
+        calculoEuro = cantidadMonetaria * 888.82
         resultadoA = str(calculoEuro)
-
         SocketCliente.send(bytes(resultadoA, "utf-8"))
         print("Cantidad Enviada")
         
     elif(mensaje == 'b'):
         cantidadRecibida = SocketCliente.recv(1024)
         cantidadMonetaria = int(cantidadRecibida.decode("utf-8"))
-
-        calculoEuro = cantidadMonetaria * 771
-
-        resultadoA = str(calculoEuro)
-
-        SocketCliente.send(bytes(resultadoA, "utf-8"))
+        calculoDolar = cantidadMonetaria * 767.90
+        resultadoB = str(calculoDolar)
+        SocketCliente.send(bytes(resultadoB, "utf-8"))
         print("Cantidad Enviada")
 
     elif(mensaje == 'c'):
