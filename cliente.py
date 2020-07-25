@@ -8,7 +8,8 @@ SocketServidor = socket.socket()
 SocketServidor.connect(("localhost", 8888))
 
 while True:
-    print("MENU")
+    print("//////////////   MENU   /////////////////")
+    print("Escriba 'salir' para terminar la conexión")
     print("a) EUR to CLP")
     print("b) USD to CLP")
     print("c) JPY to CLP")
@@ -16,9 +17,19 @@ while True:
     print("e) GBP to CLP")
     print("f) BRL to CLP")
     print("\n")
-    data = input("(Opción)>> ")
+    #data = input("(Opción)>> ")
 
-    data = input("(Opción)>> ")
+    while True:
+        data = input("(Opción)>> ")
+
+        if(data == "salir"):
+            break
+
+        if((data == 'a') or (data == 'b') or (data == 'c') or (data == 'd') or (data == 'e') or (data == 'f')):
+            break
+        else:
+            print("\n")
+            print('Error, la opción es incorrecta, vuelva a intentarlo')
 
     #TODO Validar entradas
 
@@ -33,9 +44,10 @@ while True:
     cantidadRecibida = SocketServidor.recv(1024)
     cantidadConvertida = cantidadRecibida.decode("utf-8")
 
-    print("La Cantidad Convertida es: ",cantidadConvertida) 
     print("\n")
-    time.sleep(3)
+    print("La Cantidad Convertida es: ",cantidadConvertida) 
+
+    time.sleep(1)
 
 
 print("El cliente ha finalizado")
