@@ -47,7 +47,7 @@ while True:
     print("\n")
     print("La Cantidad Convertida es: ",cantidadConvertida) 
 
-    time.sleep(1)
+    time.sleep(2)
 
 
 print("El cliente ha finalizado")
